@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.alta189</groupId>
+	<artifactId>test</artifactId>
+	<version>1.0</version>
+	<packaging>war</packaging>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>nexua.alta189</id>
+			<url>http://repo.alta189.com</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jsp-api</artifactId>
+			<version>7.0.28</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+			<version>7.0.28</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<defaultGoal>clean package</defaultGoal>
+		<finalName>${project.artifactId}</finalName>
+
+		<plugins>
+
+			<!-- Minifier plugin -->
+			<plugin>
+				<groupId>com.alta189.maven</groupId>
+				<artifactId>maven-minify-plugin</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+						<phase>prepare-package</phase>
+						<configuration>
+							<disableOptimizations>false</disableOptimizations>
+							<nomunge>true</nomunge>
+							<webappSourceDir>${project.basedir}/src/main/webapp</webappSourceDir>
+							<webappTargetDir>${project.build.directory}/minified</webappTargetDir>
+							<cssSourceDir>assets/css</cssSourceDir>
+							<jsSourceDir>assets/js</jsSourceDir>
+							<cssSourceIncludes>
+								<cssSourceFile>bootstrap.css</cssSourceFile>
+							</cssSourceIncludes>
+							<jsSourceIncludes>
+								<jsSourceFile>bootstrap.js</jsSourceFile>
+							</jsSourceIncludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- War creation plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<webappDirectory>${basedir}/src/main/webapp</webappDirectory>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
