@@ -72,7 +72,15 @@
 				<version>2.2</version>
 				<configuration>
 					<webappDirectory>${basedir}/src/main/webapp</webappDirectory>
+					<warSourceExcludes>assets</warSourceExcludes>
+
 					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<webResources>
+						<resource>
+							<!-- this is relative to the pom.xml directory -->
+							<directory>${project.build.directory}/minified</directory>
+						</resource>
+					</webResources>
 				</configuration>
 			</plugin>
 		</plugins>
